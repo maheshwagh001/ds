@@ -1,0 +1,98 @@
+export MPJ_HOME=/home/ubuntu/Downloads/mpj-v0_44
+export PATH=$MPJ_HOME/bin:$PATH
+javac -cp $MPJ_HOME/lib/mpj.jar ArrSum.java
+$MPJ_HOME/bin/mpjrun.sh -np 4 ArrSum
+------------------------------------------------------------
+
+
+In this assignment, we develop a distributed system to calculate the sum of N elements by dividing them among n processors using MPI (Message Passing Interface). Each processor computes a partial sum, and the final result is obtained by gathering all intermediate sums.
+
+--------------------------------------------------------------
+
+Steps to Implement Distributed Summation using MPI
+1. Setup the Environment
+Install Java JDK 1.8 or higher.
+
+Install MPJ Express (Java MPI Library) — used for parallel programming.
+
+Set environment variables:
+
+bash
+Copy
+Edit
+export MPJ_HOME=/path/to/mpj
+export PATH=$MPJ_HOME/bin:$PATH
+2. Write the Scatter-Gather Program
+Create an array with N elements in the master process (process rank 0).
+
+Scatter the array elements among all processors (divide array into chunks).
+
+Each processor computes the sum of its assigned chunk (partial sum).
+
+Gather all partial sums back at the master process.
+
+The master adds all partial sums to get the final total sum.
+
+3. Use MPI Functions
+MPI.Init(args) → Initialize MPI environment.
+
+MPI.COMM_WORLD.Rank() → Get current process ID (rank).
+
+MPI.COMM_WORLD.Size() → Get total number of processes.
+
+COMM_WORLD.Scatter() → Send different parts of the array to different processes.
+
+COMM_WORLD.Gather() → Collect partial sums back to master.
+
+4. Compile and Run the Program
+
+
+---------------------------------------------------------
+
+Basics:
+What is MPI?
+→ MPI (Message Passing Interface) is a standard for message passing used to write parallel and distributed programs.
+
+Which Java library is used for MPI in your lab manual?
+→ MPJ Express (mpj.jar) is used for implementing MPI in Java.
+
+What is the goal of your Assignment 3?
+→ To calculate the sum of N array elements by distributing them across multiple processors.
+
+What is a communicator in MPI?
+→ A communicator defines a group of processes that can communicate with each other, like MPI_COMM_WORLD.
+
+What is the rank of a process in MPI?
+→ It is the unique ID (number) assigned to each process within a communicator.
+
+Working and Functions:
+Which MPI function is used to divide data among processes?
+→ Scatter() function is used to distribute data.
+
+Which MPI function is used to collect results back to the master process?
+→ Gather() function is used to collect partial results.
+
+What is the first MPI function that must be called in any MPI program?
+→ MPI.Init(args) to initialize the MPI environment.
+
+How does a processor know its own ID in MPI?
+→ By calling MPI.COMM_WORLD.Rank().
+
+How does a processor find the total number of processes?
+→ By calling MPI.COMM_WORLD.Size().
+
+Practical / Execution:
+What command is used to run an MPJ Express program?
+→ $MPJ_HOME/bin/mpjrun.sh -np <number_of_processors> <ClassName>.
+
+What does the Scatter() function do in your program?
+→ It divides the array into parts and sends one part to each processor.
+
+What does the Gather() function do in your program?
+→ It collects the partial sums computed by each processor to the master.
+
+What happens if the number of array elements is not divisible by the number of processors?
+→ You must handle extra elements separately (optional extension, not mandatory per manual).
+
+Why do we prefer parallel sum over sequential sum for large data?
+→ Because parallel sum reduces computation time by dividing the workload.

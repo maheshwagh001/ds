@@ -1,0 +1,126 @@
+terminal 1
+javac *.java
+rmic AddServerImpl
+
+terminal 2
+rmiregistry
+
+ter 3 
+java AddServer
+
+t4 
+java AddClient 127.0.0.1 5 8
+
+---------------------------------------------------------
+This assignment focuses on implementing multi-threaded client/server communication using Java RMI (Remote Method Invocation). It demonstrates how distributed applications can interact by invoking methods on remote objects across different JVMs.
+
+
+Here’s a simple step-by-step of what you're coding in Assignment 1:
+
+1. Create a Remote Interface
+
+Define the methods that can be called remotely.
+
+Example: a method like double add(double a, double b).
+
+2. Implement the Remote Interface (Server Side)
+
+Write a class that implements the remote interface.
+
+This class will actually perform the operations (like addition).
+
+3. Create the Server Program
+
+Start the RMI Registry (rmiregistry).
+
+Register (bind) your remote object with a name (like "AddServer").
+
+4. Create the Client Program
+
+The client looks up the server by name via RMI Registry.
+
+It calls the remote method (like add(7, 8)) and gets the result.
+
+5. Generate Stub Files (only needed in older Java versions)
+
+Use rmic tool to generate the stub class if required.
+
+6. Compile and Run
+
+Compile all .java files.
+
+Run rmiregistry.
+
+Start the server.
+
+Run the client and see the result.
+
+
+-----------------------------------------------------------------------------------
+
+
+ Basic Questions
+What is RMI?
+→ RMI (Remote Method Invocation) allows a Java program to invoke methods on an object located on a remote machine.
+
+Why do we need Remote Method Invocation (RMI) in Java?
+→ To enable distributed computing where objects communicate across different JVMs over a network.
+
+What is the role of the RMI Registry?
+→ The RMI registry stores and provides access to remote objects by name.
+
+What is the difference between a stub and a skeleton in RMI?
+→ Stub acts as a client-side proxy while skeleton was a server-side proxy (used in older RMI versions).
+
+What is a remote interface? Why must it extend Remote?
+→ A remote interface declares methods for remote access and must extend Remote to mark it as remote-capable.
+
+Why do remote methods throw RemoteException?
+→ To handle possible network communication failures during remote method calls.
+
+What is the purpose of UnicastRemoteObject?
+→ It enables a server object to accept incoming remote calls.
+
+Explain the steps to implement a Java RMI application.
+→ Define remote interface → Implement it → Bind in server → Lookup and call in client.
+
+What happens if we forget to start the RMI Registry before running the server?
+→ The server will throw an error when trying to bind the remote object.
+
+Can RMI work without an interface? Why or why not?
+→ No, because the client needs a remote interface to know what methods it can call.
+
+⚡ Code-specific Questions
+Why do we use Naming.rebind() in the server code?
+→ To bind or update the remote object’s reference in the RMI registry.
+
+What does Naming.lookup() do on the client side?
+→ It retrieves the remote object reference from the RMI registry.
+
+Why is super() used in AddServerImpl constructor?
+→ To call the UnicastRemoteObject constructor and export the object for remote access.
+
+What is the URL format used when calling Naming.lookup()?
+→ rmi://<server_ip>/<service_name>
+
+How does the client know which method is available on the server?
+→ Through the remote interface that both client and server share.
+
+What are the arguments passed to AddClient when you run it?
+→ Server IP address, first number, and second number.
+
+🧠 Slightly Advanced Viva Questions
+What would happen if two clients tried to connect to the server at the same time?
+→ Both can connect and invoke methods since RMI handles concurrent calls.
+
+How is RMI different from simple socket programming?
+→ RMI abstracts networking by letting you call methods directly instead of manually managing data streams.
+
+Is RMI limited to Java-to-Java communication only?
+→ Yes, standard RMI works only between Java programs.
+
+What is marshalling and unmarshalling in RMI?
+→ Marshalling means converting objects into bytes, and unmarshalling means reconstructing them.
+
+How does RMI achieve distributed computing transparency?
+→ By making remote method calls look like local method calls to the programmer.

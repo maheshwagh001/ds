@@ -1,0 +1,104 @@
+javac Tring.java
+java Tring
+
+-------------------------------------------------------------------
+
+In this assignment, we implement the Token Ring Algorithm to achieve mutual exclusion in distributed systems. The algorithm circulates a token around a logical ring, granting permission to access a critical section only to the process holding the token.
+
+What is Token Ring Algorithm?
+The Token Ring Algorithm is a mutual exclusion method used in distributed systems, where processes are logically arranged in a ring structure.
+
+A special message called a token circulates around the ring.
+
+Only the process holding the token is allowed to enter the critical section (access shared resources).
+
+After using the critical section (or even if it doesn't need it), the process passes the token to its next neighbor in the ring.
+
+----------------------------------------------------------------------
+
+How Token Ring Algorithm is Implemented (Lab Manual Version)
+1. Arrange processes in a logical ring
+Every process is assigned a position in a logical ring (using machine address and process ID).
+
+Each process knows who is next to it in the ring.
+
+2. Initialize the token
+Start by giving the token to process 0 (or any selected starting process).
+
+The token is a small data object that grants permission to enter the critical section.
+
+3. Passing the token
+Each process continuously checks if it holds the token.
+
+If it needs to enter the critical section and it has the token, it enters and uses the critical section.
+
+After finishing (or if it doesn’t need the critical section), the process passes the token to its immediate next neighbor.
+
+4. Critical section access
+Only the process holding the token can enter the critical section at any time — ensuring mutual exclusion.
+
+No two processes can enter at the same time.
+
+5. Handling lost token (optional extension)
+If the token is lost (due to node failure), there must be a recovery mechanism to regenerate the token. (But in your lab assignment, token loss handling is mentioned as a limitation, not implemented.)
+
+-------------------------------------------------------------
+
+imp points
+
+- Easy to implement and verify.
+
+- Guarantees fairness (no starvation).
+
+- Drawback: If the token is lost, it is difficult to detect and regenerate.
+
+-----------------------------------------------------------------------
+
+Theory Basics:
+What is the Token Ring Algorithm?
+→ It is a mutual exclusion algorithm where a token circulates in a logical ring, and only the token holder can enter the critical section.
+
+Why is the Token Ring Algorithm needed?
+→ To ensure mutual exclusion and avoid conflicts when multiple processes want to access a shared resource.
+
+How are processes organized in Token Ring Algorithm?
+→ Processes are arranged logically in a ring, each knowing its immediate neighbor.
+
+What is a token in Token Ring Algorithm?
+→ A special message or object that grants permission to access the critical section.
+
+How many tokens are there in the Token Ring system?
+→ Exactly one token circulates at any time.
+
+Working and Process:
+What happens if a process does not want to enter the critical section?
+→ It simply passes the token to the next process without using it.
+
+How is mutual exclusion guaranteed in the Token Ring Algorithm?
+→ Because only the process holding the token can access the critical section.
+
+Does the token move randomly between processes?
+→ No, the token is passed in a fixed, logical ring order.
+
+How does the algorithm ensure fairness?
+→ Every process gets the token in turn, preventing starvation.
+
+What is the major drawback of Token Ring Algorithm?
+→ If the token is lost, it is difficult to detect and regenerate it.
+
+Practical / Code-related:
+Which environment is suggested in the lab manual for coding the Token Ring Algorithm?
+→ Java Programming Environment, JDK 1.8.
+
+Is it possible to implement Token Ring Algorithm without a centralized controller?
+→ Yes, because processes coordinate among themselves by passing the token.
+
+How does a process know when to pass the token?
+→ After completing its critical section access (or if it doesn't need to enter).
+
+What would happen if two tokens exist accidentally?
+→ Mutual exclusion would break, leading to multiple processes accessing the critical section at once.
+
+What is the assumption about the communication link between processes?
+→ The link is unidirectional and every process can send the token to its immediate right neighbor.
+

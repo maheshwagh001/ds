@@ -1,0 +1,82 @@
+javac Bully.java
+java Bully
+javac Ring.java
+java Ring
+
+------------------------------------------------------------
+
+In this assignment, we implement the Bully Algorithm and Ring Algorithm for leader election in distributed systems. These algorithms help select a new coordinator when the current one fails, ensuring smooth and coordinated operation.
+
+Bully Algorithm (Brief)
+When a process notices the coordinator has failed, it starts an election.
+
+It sends an ELECTION message to all processes with higher IDs.
+
+If no higher process responds, the initiating process becomes the new coordinator.
+
+If a higher process responds, that process takes over the election.
+
+The process with the highest ID wins — that's why it’s called the Bully algorithm ("biggest guy wins").
+
+
+
+🛠️ Ring Algorithm (Brief)
+All processes are arranged logically in a ring (each knows its successor).
+
+When a process detects the coordinator has failed, it sends an ELECTION message around the ring.
+
+Each process adds its ID to the message when it forwards it.
+
+When the message returns to the initiator, it chooses the highest ID as the new coordinator.
+
+The winner is announced around the ring using a COORDINATOR message.
+
+---------------------------------------------------------------------
+
+Theory Questions:
+What is the Bully Algorithm?
+→ It is a leader election algorithm where the highest-numbered active process becomes the new coordinator.
+
+Why is it called the Bully Algorithm?
+→ Because the process with the highest ID “bullies” others and becomes the leader.
+
+When does a process initiate an election in Bully Algorithm?
+→ When it detects that the current coordinator is not responding.
+
+What message types are used in Bully Algorithm?
+→ ELECTION, OK, and COORDINATOR messages.
+
+What is the assumption about process IDs in the Bully Algorithm?
+→ Each process has a unique numerical ID and knows the IDs of all other processes.
+
+Ring Algorithm Questions:
+How are processes arranged in the Ring Algorithm?
+→ Processes are logically arranged in a ring where each process knows its next neighbor.
+
+What happens when a process initiates an election in Ring Algorithm?
+→ It sends an ELECTION message to its next live neighbor, passing along process IDs.
+
+How is the new leader selected in Ring Algorithm?
+→ The process with the highest ID in the election message wins.
+
+What message announces the winner in Ring Algorithm?
+→ A COORDINATOR message circulates to inform all processes about the new leader.
+
+What happens if a process is down during election in Ring Algorithm?
+→ The election message skips over dead processes to find the next live neighbor.
+
+Practical/Code Questions:
+Which programming language is used for the implementation?
+→ Java programming environment (JDK 1.8).
+
+What happens if multiple processes initiate election at the same time in Bully Algorithm?
+→ The process with the highest ID among them eventually becomes the coordinator.
+
+Can multiple coordinators exist at the same time after election?
+→ No, both algorithms guarantee that finally only one leader is elected.
+
+Which algorithm is better for systems with high communication costs?
+→ Ring Algorithm is better because it uses fewer messages.
+
+What is the main weakness of the Bully Algorithm?
+→ It can cause many messages and load if lower ID processes keep initiating elections.

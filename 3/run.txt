@@ -1,0 +1,143 @@
+t1
+
+idlj -fall ReverseModule.idl
+javac *.java ReverseModule/*.java
+orbd -ORBInitialPort 1056&
+java ReverseServer -ORBInitialPort 1056& 
+
+
+t2 
+
+
+java ReverseClient -ORBInitialPort 1056 -ORBInitialHost localhost
+
+----------------------------------------------------------------------------------
+
+In this assignment, we develop a distributed application using CORBA to demonstrate object brokering. A server provides services like calculator operations or string manipulations, which clients can access remotely over the network.
+
+---------------------------------------------------
+
+
+Steps to Implement CORBA-based Distributed Application
+1. Set up CORBA Environment
+Install Java JDK 1.8 (it includes idlj compiler).
+
+Use ORB (Object Request Broker) that comes with Java.
+
+Set up environment variables if needed (JAVA_HOME, PATH).
+
+2. Define the IDL File (Interface Definition Language)
+Create an IDL file (example: Calculator.idl).
+
+Define the remote interface inside it (like add(), subtract(), etc.).
+
+Example:
+
+idl
+Copy
+Edit
+interface Calculator {
+    double add(in double a, in double b);
+    double subtract(in double a, in double b);
+};
+✅ IDL defines what services your server will offer.
+
+3. Compile the IDL File
+Use the idlj compiler to generate Java stubs and skeletons:
+
+bash
+Copy
+Edit
+idlj -fall Calculator.idl
+This generates necessary Java classes in a folder structure.
+
+4. Write Server-side Implementation
+Implement the generated interface (CalculatorOperations.java) by writing server logic.
+
+Create a server program to:
+
+Create ORB instance.
+
+Register the object with the ORB.
+
+Bind it to the Naming Service.
+
+5. Write Client-side Program
+Create a client program to:
+
+Connect to the CORBA Naming Service.
+
+Lookup the server object.
+
+Call remote methods (add(), subtract(), etc.).
+
+6. Start CORBA Naming Service
+Start the naming service before running server:
+
+bash
+Copy
+Edit
+tnameserv -ORBInitialPort 1050 &
+(tnameserv comes with JDK in older versions.)
+
+7. Compile and Run Everything
+Compile all Java files (server, client, stubs, skeletons).
+
+Run the Server first (it registers itself with Naming Service).
+
+Run the Client (it looks up server and uses its methods).
+
+--------------------------------------------------------
+
+
+Basics:
+What is CORBA?
+→ CORBA (Common Object Request Broker Architecture) is a standard for enabling communication between distributed objects across networks.
+
+What is the role of the Object Request Broker (ORB) in CORBA?
+→ ORB manages communication and data exchange between client and server objects.
+
+What is an IDL file in CORBA?
+→ IDL (Interface Definition Language) file defines the interfaces that clients and servers use to communicate.
+
+Why do we need IDL in CORBA?
+→ IDL ensures language-independent communication between different systems.
+
+What command is used to compile IDL files?
+→ idlj command is used to generate Java stubs and skeletons from IDL.
+
+Working:
+What happens after you compile the IDL file?
+→ Java classes (stubs, skeletons, interfaces) are generated for client and server use.
+
+What is the purpose of tnameserv in CORBA?
+→ tnameserv provides naming services to locate CORBA objects by name.
+
+Which method does the client use to find the server object?
+→ The client uses the Naming Service to lookup the server reference.
+
+How is the server object registered with the Naming Service?
+→ By binding the object reference with a name in the Naming Context.
+
+How does the client communicate with the server in CORBA?
+→ Through method invocations on the stub, which internally communicates with the server via ORB.
+
+Practical / Execution:
+Which Java tool provides the ORB functionality?
+→ The Java ORB implementation provided by JDK (through org.omg.CORBA package).
+
+What happens if the Naming Service is not started before running the server?
+→ The server will fail to register itself and throw an error.
+
+Can CORBA objects written in Java communicate with C++ objects?
+→ Yes, because CORBA is language-independent through IDL.
+
+What happens if the server crashes after registration?
+→ The client will not be able to invoke methods until the server restarts and rebinds.
+
+Is CORBA still commonly used today?
+→ It is less popular today, replaced by newer technologies like REST APIs and gRPC, but it is still used in legacy systems.
+
+
+
+

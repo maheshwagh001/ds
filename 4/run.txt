@@ -1,0 +1,105 @@
+python server.py
+
+python client.py
+-------------------------------------------------------------------
+
+In this assignment, we implement the Berkeley Algorithm for clock synchronization in distributed systems. The algorithm synchronizes clocks across multiple nodes by averaging their times, coordinated by a master node without relying on an external time source.
+
+ What is the Berkeley Algorithm?
+The Berkeley Algorithm is a clock synchronization algorithm used in distributed systems where no machine has an accurate global clock.
+In this algorithm:
+
+One machine (called the master) is elected to coordinate time.
+
+The master polls all the other machines (called slaves) to get their local times.
+
+It then calculates the average of all times (including its own) and sends adjustments (time differences) to each machine so they all synchronize.
+
+Key points:
+
+No need for an external reference clock like UTC.
+
+It uses internal synchronization between the systems.
+
+It can ignore faulty or outlier clocks if needed.
+
+--------------------------------------------------------------------------
+
+
+Steps to Implement the Berkeley Algorithm
+
+- Master Election:
+
+One node (computer) is chosen as the master to control synchronization.
+
+- Polling Slaves:
+
+The master sends a request to all other nodes (slaves) asking for their current clock times.
+
+- Collecting and Calculating Average:
+
+Slaves send back their local times to the master.
+
+The master calculates the average time (taking all clocks into account, including its own).
+
+- Computing Offsets:
+
+The master finds the time difference (offset) for each slave and itself based on the average time.
+
+- Sending Time Adjustments:
+
+The master sends each node an adjustment value (how much to fast-forward or rewind their clocks).
+
+- Clock Updates:
+
+Each node adjusts its own clock by the offset given by the master — and all clocks become synchronized.
+
+------------------------------------------------------------------------------------------
+
+Theory Questions:
+What is the Berkeley Algorithm?
+→ It is a centralized clock synchronization technique where a master node averages time differences among nodes.
+
+Is Berkeley Algorithm centralized or distributed?
+→ It is a centralized clock synchronization method.
+
+Does Berkeley Algorithm require a UTC time server?
+→ No, it synchronizes clocks internally without an external UTC server.
+
+What is the role of the master node in Berkeley Algorithm?
+→ The master polls slave nodes, calculates average time, and sends correction offsets.
+
+Which algorithm is used by the master to fetch slaves' clock times?
+→ Cristian’s Algorithm is used to fetch slave times.
+
+What happens if the master node fails?
+→ A secondary leader should be pre-elected to take over synchronization.
+
+What improvements are suggested for Berkeley Algorithm in the manual?
+→ Ignoring significant outliers and electing a backup master for fault tolerance.
+
+Implementation/Process Questions:
+What does the master send to the slaves after calculating the average?
+→ It sends the relative time difference (offset) to each slave node.
+
+How do slave nodes adjust their clocks in Berkeley Algorithm?
+→ By applying the offset (difference) received from the master.
+
+How is network delay minimized in Berkeley Algorithm?
+→ By sending relative inverse time differences instead of full clock times.
+
+Is the clock updated immediately after receiving the offset?
+→ Yes, slaves immediately adjust their clock after receiving the master's correction.
+
+What if some nodes report wrong times in Berkeley Algorithm?
+→ The master can ignore significant outliers when computing the average.
+
+Coding/Execution Questions:
+Which language is recommended in your lab manual for implementing Berkeley Algorithm?
+→ Python 3 is used along with Eclipse IDE.
+
+Is communication between nodes synchronous or asynchronous in Berkeley Algorithm?
+→ Communication is asynchronous (through message passing).
+
+What are the basic components needed to implement Berkeley Algorithm?
+→ A master server (for polling and sending adjustments) and multiple client slaves (for clock synchronization).
