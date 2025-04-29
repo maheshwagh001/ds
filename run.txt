@@ -1,0 +1,103 @@
+In this assignment, we create a simple web service using Java and develop a distributed client application to consume it. The project demonstrates how services can be published and accessed over a network using SOAP or RESTful APIs.
+
+-------------------------------------------------------------------
+
+Steps to Implement Web Service and Distributed Client
+1. Create the Web Service (Server-side)
+Open NetBeans IDE or any Java IDE with GlassFish Server support.
+
+Create a new Web Application Project (example name: CalculatorWSApplication).
+
+Create a Java class (example: CalculatorWS.java) inside a package (e.g., org.calculator).
+
+Convert the class into a Web Service:
+
+Right-click the class → New → Web Service.
+
+Add methods like add(int a, int b), subtract(int a, int b), etc.
+
+The methods will be exposed as Web Service operations.
+
+2. Deploy the Web Service
+Right-click on the project → Run → it will start GlassFish Server.
+
+The web service will be deployed and available via WSDL (Web Service Definition Language).
+
+3. Create the Web Service Client (Consumer-side)
+Create a new Java Application project (example name: CalculatorClient).
+
+Add Web Service Client:
+
+Right-click project → New → Web Service Client.
+
+Provide the WSDL URL from the deployed server.
+
+NetBeans will auto-generate stub classes for communication with the server.
+
+4. Consume the Web Service
+Create a Java class (example: CalculatorClientApp.java).
+
+In this class, call the methods provided by the web service (like add(), subtract()).
+
+Example:
+
+java
+Copy
+Edit
+CalculatorWSService service = new CalculatorWSService();
+CalculatorWS port = service.getCalculatorWSPort();
+int result = port.add(5, 7);
+System.out.println("Addition Result: " + result);
+5. Run the Client
+Run your client project — it will send a request to the server's web service and get the response!
+
+------------------------------------------------------------------------------------
+
+Basics:
+What is a Web Service?
+→ A web service is a platform-independent, open standard software system that enables communication between different applications over the network.
+
+What are the types of Web Services?
+→ SOAP (Simple Object Access Protocol) and REST (Representational State Transfer).
+
+Which type of Web Service are you implementing in the lab?
+→ SOAP-based Web Service.
+
+What is WSDL in Web Services?
+→ WSDL (Web Services Description Language) is an XML file that describes the methods and data types offered by a web service.
+
+What is UDDI?
+→ UDDI (Universal Description, Discovery, and Integration) is a directory service for storing information about web services.
+
+Working:
+What are the main components of Web Services?
+→ Service Provider, Service Requestor (Client), and Service Registry.
+
+What protocol is mainly used in SOAP Web Services?
+→ HTTP (HyperText Transfer Protocol) for communication and XML for data formatting.
+
+What is the role of GlassFish Server in your assignment?
+→ GlassFish Server hosts and deploys the web service for access over the network.
+
+How does a client know how to call the web service methods?
+→ By using the WSDL file, which describes available operations and parameters.
+
+What is the use of CalculatorWSService and CalculatorWS classes in the client?
+→ CalculatorWSService connects to the web service, and CalculatorWS is used to call the remote methods.
+
+Practical / Code-related:
+Which IDE is recommended in the lab manual for Web Service development?
+→ NetBeans IDE with GlassFish Server.
+
+What steps are involved in consuming a Web Service in a Java client?
+→ Generate client code from WSDL, create a service object, call the methods through a service port.
+
+What is the basic structure of a SOAP message?
+→ A SOAP message contains Envelope, Header (optional), Body, and Fault (optional).
+
+What is the main difference between SOAP and REST?
+→ SOAP is protocol-based and uses XML, while REST is architecture-based and can use any format like JSON or XML.
+
+Can RESTful services also be created in Java?
+→ Yes, using the JAX-RS API (Java API for RESTful Web Services).
+
